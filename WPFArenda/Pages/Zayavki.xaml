@@ -1,0 +1,129 @@
+﻿<Page x:Class="WPFArenda.Pages.Zayavki"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:WPFArenda.Pages" xmlns:ui2="http://schemas.microsoft.com/netfx/2007/xaml/presentation" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Zayavki">
+
+    <Grid Background="#FF292020">
+        <!-- Шапка -->
+        <Grid Background="Black" Height="60" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Image Source="/Images/house.png" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,15,0,0"/>
+                <TextBlock Text="ЦИАНебон"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS" Foreground="White"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Заявки" FontFamily="Comic Sans MS" FontSize="30" FontWeight="Bold" Foreground="White"/>
+            </StackPanel>
+            <Button x:Name="BtnBack" 
+    Content="Назад" 
+    Grid.Column="1" 
+    Margin="8" 
+    VerticalAlignment="Center" Background="DarkBlue" Click="BtnBack_Click"/>
+        </Grid>
+
+        <!-- Основной контент -->
+        <Grid Margin="16,100,16,16" Background="#FF292020">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Фильтр по статусу -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,8">
+                <Button x:Name="BtnDogovor" Content="Создать договор" Background="Black"  Foreground="White" Width="auto" Height="40" Margin="0,0,20,0" Click="BtnDogovor_Click" />
+                <Button x:Name="BtnReview" Content="⭐Отзыв" Background="Black"  Foreground="White" Width="100" Height="40" Margin="0,0,20,0" Click="BtnReview_Click"/>
+                <ui:Button x:Name="BtnYes" Visibility="Visible" Content="Одобрить" Background="LightGreen" Margin="0,0,20,0"  Foreground="Black" Width="100" Height="40" Click="BtnYes_Click" />
+                <ui:Button x:Name="BtnNo"  Visibility="Visible" Content="Запретить"  Foreground="Black" Width="100" Margin="0,0,20,0" Height="40" Background="#FFC93A3A" Click="BtnNo_Click" />
+
+                <TextBlock Text="Фильтр: "
+                           x:Name="TxtFilter"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"
+                           Foreground="White" />
+
+                <ComboBox x:Name="StatusFilterCombo" Text="Фильтр:"
+                              Width="200" SelectionChanged="StatusFilterCombo_SelectionChanged" Foreground="White" BorderBrush="White" Background="Black"
+                               />
+            </StackPanel>
+
+
+            <ui:Card Background="#FF292020" Grid.Row="1" Padding="16">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ListView x:Name="ZayavkiListView"
+              ItemsSource="{Binding}"
+              Background="Transparent"
+              BorderThickness="0"
+              HorizontalAlignment="Center">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"  />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="15" CornerRadius="8" BorderBrush="LightGray" BorderThickness="1" Padding="10">
+
+                                    <StackPanel Width="auto" MaxHeight="300" >
+                                        <Image Source="{Binding Object.Image}" Width="80" Height="80" Stretch="UniformToFill" Margin="0,0,10,0" />
+
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+                                            <TextBlock Text="Название:  " FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding Object.Title}" FontSize="16" FontWeight="Bold" Foreground="White" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+                                            <TextBlock Text="Собственник:  " FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding Object.User.FName }" FontSize="16" FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding Object.User.Name }" FontSize="16" FontWeight="Bold" Foreground="White" Margin="7,0,0,0" />
+                                            <TextBlock Text="{Binding Object.User.Patronumic}" FontSize="16" FontWeight="Bold" Foreground="White" Margin="7,0,0,0" />
+
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+                                            <TextBlock Text="Арендатор:  " FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding User.FName }" FontSize="16" FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding User.Name }" FontSize="16" FontWeight="Bold" Foreground="White" Margin="7,0,0,0" />
+                                            <TextBlock Text="{Binding User.Patronumic}" FontSize="16" FontWeight="Bold" Foreground="White" Margin="7,0,0,0" />
+
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+                                            <TextBlock Text="Откуда забрать:  " FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding Object.Location}" FontSize="16" FontWeight="Bold" Foreground="White" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+                                            <TextBlock Text="Сообщение от арендатора:  " FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding Message}" FontSize="14" Foreground="DarkGoldenrod" TextWrapping="Wrap" Margin="0,4,0,0" />
+                                        </StackPanel>
+
+
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+                                            <TextBlock Text="Статус: " FontWeight="Bold" Foreground="White" />
+                                            <TextBlock Text="{Binding Status_Zayavka.Name}" x:Name="TxtStatus" Foreground="DarkGreen" FontWeight="SemiBold" />
+                                        </StackPanel>
+                                        <StackPanel VerticalAlignment="Center">
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </ui:Card>
+
+        </Grid>
+
+        <!-- Подвал -->
+        <ui:Card HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="40" Padding="8">
+            <TextBlock Text="© 2024 Аренда. Все права отсутствуют."
+                       HorizontalAlignment="Center"
+                       Foreground="White" />
+        </ui:Card>
+    </Grid>
+</Page>

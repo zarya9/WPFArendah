@@ -1,0 +1,835 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище WPF6Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID_Category" />
+          </Key>
+          <Property Name="ID_Category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ID_Contract" />
+          </Key>
+          <Property Name="ID_Contract" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Zayavka" Type="int" />
+          <Property Name="DateStart" Type="date" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="TotalPrice" Type="int" />
+          <Property Name="PaymentStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="MethodPayment">
+          <Key>
+            <PropertyRef Name="ID_Method" />
+          </Key>
+          <Property Name="ID_Method" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Owner" Type="int" />
+          <Property Name="ID_Category" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Location" Type="nvarchar" MaxLength="100" />
+          <Property Name="Atribut" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Dostupnost" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Image" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID_Payment" />
+          </Key>
+          <Property Name="ID_Payment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Contract" Type="int" />
+          <Property Name="PaymentDate" Type="date" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="ID_Method" Type="int" />
+        </EntityType>
+        <EntityType Name="PaymentStatus">
+          <Key>
+            <PropertyRef Name="ID_Status" />
+          </Key>
+          <Property Name="ID_Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="ID_Review" />
+          </Key>
+          <Property Name="ID_Review" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="ID_User" Type="int" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Status_Zayavka">
+          <Key>
+            <PropertyRef Name="ID_Status" />
+          </Key>
+          <Property Name="ID_Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="FName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Patronumic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Role" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Image" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Zayavka">
+          <Key>
+            <PropertyRef Name="ID_Zayavka" />
+          </Key>
+          <Property Name="ID_Zayavka" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="ID_User" Type="int" />
+          <Property Name="Message" Type="nvarchar" MaxLength="200" />
+          <Property Name="ID_Status" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Contract_PaymentStatus">
+          <End Role="PaymentStatus" Type="Self.PaymentStatus" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentStatus">
+              <PropertyRef Name="ID_Status" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="PaymentStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Zayavka">
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zayavka">
+              <PropertyRef Name="ID_Zayavka" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ID_Zayavka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID_Category" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ID_Contract" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ID_Contract" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_MethodPayment">
+          <End Role="MethodPayment" Type="Self.MethodPayment" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MethodPayment">
+              <PropertyRef Name="ID_Method" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ID_Method" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Status_Zayavka">
+          <End Role="Status_Zayavka" Type="Self.Status_Zayavka" Multiplicity="0..1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_Zayavka">
+              <PropertyRef Name="ID_Status" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище WPF6ModelContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MethodPayment" EntityType="Self.MethodPayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentStatus" EntityType="Self.PaymentStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status_Zayavka" EntityType="Self.Status_Zayavka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zayavka" EntityType="Self.Zayavka" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Contract_PaymentStatus" Association="Self.FK_Contract_PaymentStatus">
+            <End Role="PaymentStatus" EntitySet="PaymentStatus" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Zayavka" Association="Self.FK_Contract_Zayavka">
+            <End Role="Zayavka" EntitySet="Zayavka" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_Category" Association="Self.FK_Object_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_User" Association="Self.FK_Object_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Contract" Association="Self.FK_Payments_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_MethodPayment" Association="Self.FK_Payments_MethodPayment">
+            <End Role="MethodPayment" EntitySet="MethodPayment" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Object" Association="Self.FK_Reviews_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_User" Association="Self.FK_Reviews_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Object" Association="Self.FK_Zayavka_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Status_Zayavka" Association="Self.FK_Zayavka_Status_Zayavka">
+            <End Role="Status_Zayavka" EntitySet="Status_Zayavka" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_User" Association="Self.FK_Zayavka_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WPF6Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID_Category" />
+          </Key>
+          <Property Name="ID_Category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Object_Category" FromRole="Category" ToRole="Object" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ID_Contract" />
+          </Key>
+          <Property Name="ID_Contract" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Zayavka" Type="Int32" />
+          <Property Name="DateStart" Type="DateTime" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="TotalPrice" Type="Int32" />
+          <Property Name="PaymentStatus" Type="Int32" />
+          <NavigationProperty Name="PaymentStatus1" Relationship="Self.FK_Contract_PaymentStatus" FromRole="Contract" ToRole="PaymentStatus" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Contract_Zayavka" FromRole="Contract" ToRole="Zayavka" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Contract" FromRole="Contract" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="MethodPayment">
+          <Key>
+            <PropertyRef Name="ID_Method" />
+          </Key>
+          <Property Name="ID_Method" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_MethodPayment" FromRole="MethodPayment" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Owner" Type="Int32" />
+          <Property Name="ID_Category" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Atribut" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Dostupnost" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Object_Category" FromRole="Object" ToRole="Category" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Object_User" FromRole="Object" ToRole="User" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Object" FromRole="Object" ToRole="Reviews" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Zayavka_Object" FromRole="Object" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID_Payment" />
+          </Key>
+          <Property Name="ID_Payment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Contract" Type="Int32" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="ID_Method" Type="Int32" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Payments_Contract" FromRole="Payments" ToRole="Contract" />
+          <NavigationProperty Name="MethodPayment" Relationship="Self.FK_Payments_MethodPayment" FromRole="Payments" ToRole="MethodPayment" />
+        </EntityType>
+        <EntityType Name="PaymentStatus">
+          <Key>
+            <PropertyRef Name="ID_Status" />
+          </Key>
+          <Property Name="ID_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_PaymentStatus" FromRole="PaymentStatus" ToRole="Contract" />
+        </EntityType>
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="ID_Review" />
+          </Key>
+          <Property Name="ID_Review" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="ID_User" Type="Int32" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Reviews_Object" FromRole="Reviews" ToRole="Object" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Reviews_User" FromRole="Reviews" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID_Role" />
+          </Key>
+          <Property Name="ID_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Status_Zayavka">
+          <Key>
+            <PropertyRef Name="ID_Status" />
+          </Key>
+          <Property Name="ID_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Zayavka_Status_Zayavka" FromRole="Status_Zayavka" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronumic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Role" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Object_User" FromRole="User" ToRole="Object" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_User" FromRole="User" ToRole="Reviews" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK_Zayavka_User" FromRole="User" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Zayavka">
+          <Key>
+            <PropertyRef Name="ID_Zayavka" />
+          </Key>
+          <Property Name="ID_Zayavka" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="ID_User" Type="Int32" />
+          <Property Name="Message" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Status" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Contract" Relationship="Self.FK_Contract_Zayavka" FromRole="Zayavka" ToRole="Contract" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Zayavka_Object" FromRole="Zayavka" ToRole="Object" />
+          <NavigationProperty Name="Status_Zayavka" Relationship="Self.FK_Zayavka_Status_Zayavka" FromRole="Zayavka" ToRole="Status_Zayavka" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Zayavka_User" FromRole="Zayavka" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Object_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID_Category" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_PaymentStatus">
+          <End Role="PaymentStatus" Type="Self.PaymentStatus" Multiplicity="0..1" />
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentStatus">
+              <PropertyRef Name="ID_Status" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="PaymentStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contract_Zayavka">
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zayavka">
+              <PropertyRef Name="ID_Zayavka" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ID_Zayavka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Contract">
+          <End Role="Contract" Type="Self.Contract" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="ID_Contract" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ID_Contract" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_MethodPayment">
+          <End Role="MethodPayment" Type="Self.MethodPayment" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MethodPayment">
+              <PropertyRef Name="ID_Method" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ID_Method" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID_Role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ID_Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_Status_Zayavka">
+          <End Role="Status_Zayavka" Type="Self.Status_Zayavka" Multiplicity="0..1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_Zayavka">
+              <PropertyRef Name="ID_Status" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zayavka_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID_User" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WPF6Entities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Contract" EntityType="Self.Contract" />
+          <EntitySet Name="MethodPayment" EntityType="Self.MethodPayment" />
+          <EntitySet Name="Object" EntityType="Self.Object" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="PaymentStatus" EntityType="Self.PaymentStatus" />
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Status_Zayavka" EntityType="Self.Status_Zayavka" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Zayavka" EntityType="Self.Zayavka" />
+          <AssociationSet Name="FK_Object_Category" Association="Self.FK_Object_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_PaymentStatus" Association="Self.FK_Contract_PaymentStatus">
+            <End Role="PaymentStatus" EntitySet="PaymentStatus" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contract_Zayavka" Association="Self.FK_Contract_Zayavka">
+            <End Role="Zayavka" EntitySet="Zayavka" />
+            <End Role="Contract" EntitySet="Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Contract" Association="Self.FK_Payments_Contract">
+            <End Role="Contract" EntitySet="Contract" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_MethodPayment" Association="Self.FK_Payments_MethodPayment">
+            <End Role="MethodPayment" EntitySet="MethodPayment" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_User" Association="Self.FK_Object_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Object" Association="Self.FK_Reviews_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Object" Association="Self.FK_Zayavka_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_User" Association="Self.FK_Reviews_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_Status_Zayavka" Association="Self.FK_Zayavka_Status_Zayavka">
+            <End Role="Status_Zayavka" EntitySet="Status_Zayavka" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zayavka_User" Association="Self.FK_Zayavka_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище WPF6ModelContainer" CdmEntityContainer="WPF6Entities2">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="WPF6Model.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contract">
+            <EntityTypeMapping TypeName="WPF6Model.Contract">
+              <MappingFragment StoreEntitySet="Contract">
+                <ScalarProperty Name="ID_Contract" ColumnName="ID_Contract" />
+                <ScalarProperty Name="ID_Zayavka" ColumnName="ID_Zayavka" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MethodPayment">
+            <EntityTypeMapping TypeName="WPF6Model.MethodPayment">
+              <MappingFragment StoreEntitySet="MethodPayment">
+                <ScalarProperty Name="ID_Method" ColumnName="ID_Method" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Object">
+            <EntityTypeMapping TypeName="WPF6Model.Object">
+              <MappingFragment StoreEntitySet="Object">
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_Owner" ColumnName="ID_Owner" />
+                <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Atribut" ColumnName="Atribut" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Dostupnost" ColumnName="Dostupnost" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="WPF6Model.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="ID_Payment" ColumnName="ID_Payment" />
+                <ScalarProperty Name="ID_Contract" ColumnName="ID_Contract" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ID_Method" ColumnName="ID_Method" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentStatus">
+            <EntityTypeMapping TypeName="WPF6Model.PaymentStatus">
+              <MappingFragment StoreEntitySet="PaymentStatus">
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="WPF6Model.Reviews">
+              <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="ID_Review" ColumnName="ID_Review" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="WPF6Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status_Zayavka">
+            <EntityTypeMapping TypeName="WPF6Model.Status_Zayavka">
+              <MappingFragment StoreEntitySet="Status_Zayavka">
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="WPF6Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronumic" ColumnName="Patronumic" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zayavka">
+            <EntityTypeMapping TypeName="WPF6Model.Zayavka">
+              <MappingFragment StoreEntitySet="Zayavka">
+                <ScalarProperty Name="ID_Zayavka" ColumnName="ID_Zayavka" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

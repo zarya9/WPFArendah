@@ -1,0 +1,117 @@
+﻿<Page x:Class="WPFArenda.Pages.Arend"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:WPFArenda.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Arend">
+    <Grid>
+        <!-- Шапка -->
+        <Grid Background="Black" Height="60" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Image Source="/Images/house.png" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,15,0,0"/>
+                <TextBlock Text="ЦИАНебон" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS" Foreground="White"/>
+            </StackPanel>
+
+            <Button x:Name="BtnBack" 
+            Content="Назад" 
+            Grid.Column="1" 
+            Margin="8" 
+            VerticalAlignment="Center" Background="DarkBlue" Click="BtnBack_Click"/>
+        </Grid>
+
+        <Grid Margin="0,60,0,40" Background="#FF292020">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Expander Background="#FF3F2F2F" FontSize="20" FontWeight="Bold" Margin="0,8,0,0" VerticalAlignment="Top"  >
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="/Images/lines.png" Width="30" Height="30" Margin="5,0,10,0" />
+                    </StackPanel>
+                </Expander.Header>
+
+                <StackPanel>
+                    <Button x:Name="BtnAccount"   Background="Gray" Width="78" Click="BtnAccount_Click" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/account.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="BtnQR" Background="Gray" Width="78" Click="BtnQR_Click" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/qr.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnObjects"  Visibility="Visible" Background="Gray" Width="78" Click="BtnObjects_Click"  >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/exit.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Expander>
+            <Grid Background="#FF292020" HorizontalAlignment="Center" Grid.Column="1" Margin="16" >
+                <StackPanel HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Заявка на аренду" FontFamily="Comic Sans MS" FontSize="24" FontWeight="Bold" Foreground="White" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="0,20,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock Text="Название: " VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <TextBlock x:Name="TxtTitleObject" Text="{Binding Title}" VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock Text="Описание: " VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <TextBlock x:Name="TxtDescriptionObject" Text="{Binding Description}" VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock Text="Стоимость: " VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <TextBlock x:Name="TxtPriceObject" Text="{Binding Price}" VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock Text="Дата начала: " VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <DatePicker x:Name="StartDatePicker" Width="150" Margin="10,0" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock Text="Дата окончания: " VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <DatePicker x:Name="EndDatePicker" Width="150" Margin="10,0" SelectedDateChanged="DatePicker_SelectedDateChanged" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock Text="Откуда забрать: " VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White" />
+                            <TextBlock x:Name="TxtPlaceObject" Text="{Binding Location}" VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Foreground="White"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Оставьте сообщение для владельца: " TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="18" Width="231" Foreground="White" />
+                                <TextBlock Text="Количество символов " x:Name="TxtCountSymbol" TextWrapping="Wrap" VerticalAlignment="Top" FontFamily="Comic Sans MS" FontSize="11" Width="231" Foreground="White" />
+                            </StackPanel>
+                            <TextBox Background="#FF585050" TextWrapping="Wrap"  x:Name="TxtMessageObject" Width="250" MaxLength="200" Height="200" BorderBrush="Black" TextChanged="TxtMessageObject_TextChanged"/>
+                        </StackPanel>
+                        <Button Content="Арендовать" Name="BtnArend" Background="DarkBlue" HorizontalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="28" Click="BtnArend_Click" Margin="5,30,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+
+
+            </Grid>
+        </Grid>
+
+        <Grid  Height="40" Background="Black" VerticalAlignment="Bottom">
+            <TextBlock 
+            Text="© 2024 Аренда. Все права отсутствуют." 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center" 
+            FontSize="12" Foreground="White" />
+        </Grid>
+    </Grid>
+</Page>

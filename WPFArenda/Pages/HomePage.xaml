@@ -1,0 +1,144 @@
+﻿<Page
+    x:Class="WPFArenda.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:local="clr-namespace:WPFArenda"
+    Title="HomePage"
+    mc:Ignorable="d"
+    d:DesignWidth="800"
+    d:DesignHeight="600"
+    >
+
+    <Grid>
+        <!-- Шапка -->
+        <Grid Background="Black" Height="60" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="30,0,0,0">
+                <Image Source="/Images/house.png" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,1,0,0"/>
+                <TextBlock Text="ЦИАНебон" Foreground="White" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS"/>
+            </StackPanel>
+
+            
+        </Grid>
+
+        <Grid Margin="0,60,0,40" Background="#FF292020">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Expander Background="Gray" FontSize="20" FontWeight="Bold" Margin="30,8,-2,0" VerticalAlignment="Top" Expanded="Expander_Expanded" >
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="/Images/lines.png" Width="30" Height="30" Margin="5,0,10,0" />
+                    </StackPanel>
+                </Expander.Header>
+
+                <StackPanel>
+                    <Button x:Name="BtnAccount" Visibility="Visible"  Background="Gray" Width="50" Click="BtnAccount_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/account.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnZayavka"  Visibility="Visible" Background="Gray" Width="50" Click="BtnZayavka_Click" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/заявка.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnOtchet" Background="Gray" Width="50" Click="BtnOtchet_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/отчет.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnOtchet2" Background="Gray" Width="50" Click="BtnOtchet2_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/отчет.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnOtchet3" Background="Gray" Width="50" Click="BtnOtchet3_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/отчет.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnQR" Background="Gray" Width="50" Click="BtnQR_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/qr.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnExit"  Visibility="Visible" Background="Gray" Width="50" Click="BtnExit_Click">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="/Images/exit.png" Width="20" Height="20" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Expander>
+            <Grid Background="#FF292020" Grid.Column="1"  Margin="16" >
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Background="#FF292020" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal" Margin="8,0">
+                            <TextBlock Text="Сортировка по цене: " Foreground="White" VerticalAlignment="Center" Margin="0,0,8,0" FontFamily="Comic Sans MS" FontWeight="Bold"/>
+                            <Button x:Name="SortVozrUp" Content="По возрастанию" Foreground="White" Width="120" Margin="4,0" Click="SortVozrUp_Click" Background="#0F4A2A2A" BorderBrush="Wheat"/>
+                            <Button x:Name="SortVozrDown" Content="По убыванию" Foreground="White" Width="120" Margin="4,0" Click="SortVozrDown_Click" BorderBrush="Wheat"/>
+                        </StackPanel>
+                        <TextBox x:Name="TxtNameObject" Height="40" Width="200" Margin="20,0,20,0" TextChanged="TxtNameObject_TextChanged"/>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Text="Фильтр по цене:" VerticalAlignment="Center" FontFamily="Comic Sans MS" FontWeight="Bold" Foreground="White"/>
+                            <Slider Minimum="0" Maximum="100000"  
+                            x:Name="PriceFilterSlider" Width="200" Margin="0,4" ValueChanged="PriceFilterSlider_ValueChanged"/>
+                            <TextBlock x:Name="PriceFilterValue" Text="Цена: до"  FontSize="16" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <Button x:Name="BtnArend" Content="Арендовать" Margin="15,0,0,0" Foreground="White" Background="#0F000000" BorderBrush="Wheat" Click="BtnArend_Click" />
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Рекомендации" x:Name="TxtRecomend" Visibility="Visible" FontFamily="Comic Sans MS" FontSize="20" FontWeight="Bold" />
+                    </StackPanel>
+                </StackPanel>
+
+                <ListView Visibility="Visible" Name="RentalObjectsListView" Background="#FF292020" MaxWidth="1200" Height="500" VerticalAlignment="Center" Margin="0,50,0,0">
+                    
+                    <ListView.Resources>
+                        <Style TargetType="ScrollViewer">
+                            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"  />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            
+                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" CornerRadius="8" Width="280">
+                                <StackPanel Orientation="Horizontal" Margin="8" Background="#FF292020">
+                                    <Image Source="{Binding Image}" Width="80" Height="80" Stretch="UniformToFill" Margin="0,0,10,0" />
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="White"/>
+                                        <TextBlock Text="{Binding User.Name}" Foreground="White" FontSize="14"/>
+                                        <TextBlock Text="{Binding Price, StringFormat=Стоимость: {0:C}}" Language="ru-RU" Foreground="Green" FontWeight="Bold" FontSize="14"/>
+                                        <TextBlock Text="{Binding AverageRating, StringFormat=Средний рейтинг: {0:F1}}" Foreground="Yellow" FontWeight="Bold" FontSize="14"/>
+                                        <Button x:Name="BtnReviewObject" Content="Отзывы" Background="Black" Foreground="White" Click="BtnReviewObject_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <Grid  Height="40" Background="#FF292020" VerticalAlignment="Bottom">
+            <TextBlock 
+                Text="© 2024 Аренда. Все права отсутствуют." 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center" 
+                FontSize="12" Foreground="White" />
+        </Grid>
+    </Grid>
+</Page>
